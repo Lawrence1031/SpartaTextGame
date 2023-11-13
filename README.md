@@ -92,7 +92,63 @@
 
 ### 구현한 기능 소개
 
-#### 1. 콘솔 꾸미기
+#### 1. 아이템 정보를 클래스로 구현해서 배열로 관리하기
+
+<details>
+
+<summary>접기/펼치기</summary>
+
+```
+public class Item
+{
+    public string Name { get; set; }
+    public int Atk { get; }
+    public int Def { get; }
+    public int Pri { get; }
+    public int Len { get; }
+    public bool IsEquip { get; set; }
+
+    public Item(string name, int atk, int def, int pri, bool isEquip = false)
+    {
+        Name = name;
+        Atk = atk;
+        Def = def;
+        Pri = pri;
+        IsEquip = isEquip;
+    }
+}
+```
+위와 같이 아이템을 클래스화했다. 아이템이 갖고 있는 정보는 (아이템명, 공격력, 방어력, 가격, 장착여부)이다.
+이후에 아래와 같이 아이템을 배열로 만들어서 관리했다.
+
+```
+items = new Item[]
+{
+    new Item("무쇠 갑옷", 0, 5, 0),		// new Item("무쇠 갑옷", 0, 5, 0, true)
+    new Item("낡은 검", 2, 0, 0),		// new Item("낡은 검", 2, 0, 0, true)
+    new Item("단검", 1, 0, 0),
+    new Item("숏소드", 5, 0, 100)
+};
+```
+
+장착여부(bool isEquip은 초기에 false로 정의했기에 따로 값을 주지 않는 한 false이다)
+만약 초기에 장착하게 하고 싶으면 주석과 같이 초기 값에 true를 넣으면된다.
+이후에 items에 관한 상호작용을 하는 경우에 이 배열을 사용했다
+예를 들어 장비 관리에서 장비를 장착하는 선택지를
+```
+public static void ItemSelection()
+{
+    for (int i = 0; i < items.Length;i++)
+    {
+        WriteLine($"{i + 1}. {items[i].Name}");
+    }
+}
+```
+의 방식으로 코딩했다.
+
+</details>
+
+#### 2. 콘솔 꾸미기
 
 <details>
 
@@ -122,7 +178,7 @@ ResetColor();
 
 </details>
 
-#### 2. 인벤토리 크기 맞춤
+#### 3. 인벤토리 크기 맞춤
 
 
 <details>

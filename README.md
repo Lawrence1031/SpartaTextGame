@@ -313,7 +313,14 @@ public static string PadRightForMixedText(string str, int totalLength)
 
 
 
+#### 3. 인벤토리 정렬
 
+<details>
+	
+<summary>접기/펼치기</summary>
+
+
+</details>
 
 
 

@@ -199,14 +199,111 @@ ResetColor();
 
 <details>
 
-	
+수작업으로 table의 길이를 정하고, 그 길이에 맞게 할당해서 테두리를 그린 뒤에
+items[i]의 정보들을 입력하는 방식으로 직접 그림.
+PadRight()를 사용하는 과정에서
+한글은 넓은 문자로 길이가 2로 취급해야되는 주의점이 있음.
+직접 그림으로써 장착 아이템의 색상을 변경할 수 있고,
+공격력과 방어력에 색상을 주어 구분하기 쉽게 할 수 있음.
+
+<details>
 <summary>접기/펼치기</summary>
 
+```
+	
+public static void ItemTable()
+{
+    int tableWidth = 47;
+    WriteLine(new string('-', tableWidth));
+    Write("| 번호 | ");
+    Write("     아이템명      | ");
+    ForegroundColor = ConsoleColor.Red;
+    Write("공격력");
+    ResetColor();
+    Write(" | ");
+    ForegroundColor = ConsoleColor.Blue;
+    Write("방어력");
+    ResetColor();
+    WriteLine(" |");
 
-ConsoleTables 사용
-아래와 같이 정렬되게 구현
+    WriteLine(new string('-', tableWidth));
 
-![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/bae0cbfc-3f95-400a-95b0-84da64bd6403)
+    for (int i = 0; i < items.Length; i++)
+    {
+        Write($"|  {i + 1}   | ");
+        if (items[i].IsEquip)
+        {
+            ForegroundColor = ConsoleColor.Green;
+            Write(" ");
+            Write(PadRightForMixedText(items[i].Name, 18));
+            ResetColor();
+        }
+        else
+        {
+            Write(" ");
+            Write(PadRightForMixedText(items[i].Name, 18));
+        }
+        Write("|");
+        ForegroundColor = ConsoleColor.Red;
+        if (items[i].Atk == 0)
+        {
+            Write(" ".PadRight(8));
+        }
+        else
+        {
+            Write("  + ");
+            Write(items[i].Atk.ToString().PadRight(4));
+        }
+        ResetColor();
+        Write("|");
+        ForegroundColor = ConsoleColor.Blue;
+        if (items[i].Def == 0)
+        {
+            Write(" ".PadRight(8));
+        }
+        else
+        {
+            Write("  + ");
+            Write(items[i].Def.ToString().PadRight(4));
+        }
+        ResetColor();
+        Write("|");
+        WriteLine("");
+    }
+    WriteLine(new string('-', tableWidth));
+}
+
+// 글자가 넓은 문자인 경우에 길이를 조정해주는 조작이 필요함
+public static int GetPrintableLength(string str)
+{
+    int length = 0;
+    foreach (char c in str)
+    {
+        if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter)
+        {
+            length += 2;  // 한글과 같은 넓은 문자에 대해 길이를 2로 취급
+        }
+        else
+        {
+            length += 1;  // 나머지 문자에 대해 길이를 1로 취급
+        }
+    }
+
+    return length;
+}
+
+public static string PadRightForMixedText(string str, int totalLength)
+{
+    int currentLength = GetPrintableLength(str);
+    int padding = totalLength - currentLength;
+    return str.PadRight(str.Length + padding);
+}
+```
+
+</details>
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5753cb58-850c-412c-a127-54340b67d812)
+
 
 
 

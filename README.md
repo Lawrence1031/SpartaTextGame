@@ -183,8 +183,9 @@ ResetColor();
 
 장착중인 아이템을 초록색으로 표시
 
-![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5c28e2b8-6137-4701-a399-74dff4f16ae4)
-![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/f4e14369-f0d8-412e-80d2-5f378d4aec8e)
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5f5f746b-9166-4375-b4eb-eccacf817326)
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/bc542bab-f86e-41a6-9def-24786e8f0e9f)
+
 
 
 

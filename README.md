@@ -105,7 +105,6 @@ public class Item
     public int Atk { get; }
     public int Def { get; }
     public int Pri { get; }
-    public int Len { get; }
     public bool IsEquip { get; set; }
 
     public Item(string name, int atk, int def, int pri, bool isEquip = false)
@@ -119,6 +118,8 @@ public class Item
 }
 ```
 위와 같이 아이템을 클래스화했다. 아이템이 갖고 있는 정보는 (아이템명, 공격력, 방어력, 가격, 장착여부)이다.
+item의 Name은 장착 시에 [E]를 앞에 추가하기 위해 set을 추가했으며,
+장착여부도 플레이어가 장착할 수 있게 하기 위해 set을 추가했다.
 이후에 아래와 같이 아이템을 배열로 만들어서 관리했다.
 
 ```

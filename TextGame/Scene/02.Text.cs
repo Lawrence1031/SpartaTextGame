@@ -70,7 +70,7 @@ namespace TextGame.Scene
             WriteLine("2. 인벤토리");
             WriteLine("3. 상점으로");
             WriteLine("5. 던전으로");
-            WriteLine("0. 게임종료\n");
+            WriteLine("Esc. 게임종료\n");
             WriteLine("원하시는 행동을 입력해주세요\n>>");
 
             Select.MainS();
@@ -82,22 +82,24 @@ namespace TextGame.Scene
             Clear();
             Data.ChangeStat();
             // 두번째 페이지 (인트로에서 1. 상태 보기를 선택한 경우)
+            ForegroundColor = ConsoleColor.DarkMagenta;
             WriteLine("상태 보기");  // 글씨 색상 변경 + 크기 크게
+            ResetColor();
             WriteLine("캐릭터의 정보가 표시됩니다\n");
 
             // 캐릭터 정보 표기 부분인데 이 부분은 함수를 이용해서 표기
             // 예를 들면 status(); 로 // 아래는 표시 예
-            WriteLine($"Lv. {Data.player.Level}");
-            WriteLine($"{Data.player.Name}({Data.player.Job})");
+            Write($"Lv. {Data.player.Level.ToString("00")}   ");
+            WriteLine($"{Data.player.Name} [{Data.player.Job}]\n");  // ("{0} ({1})", Data.player.Name, Date.player.Job) 으로도 표현 가능
             if (Data.ChangedAtk == 0)
             {
                 WriteLine($"공격력 : {Data.TotalAtk}");
             }
             else if (Data.ChangedAtk != 0)
             {
-                Write($"공격력 : {Data.TotalAtk} + ");
+                Write($"공격력 : {Data.TotalAtk} ");
                 ForegroundColor = ConsoleColor.Red;
-                WriteLine($"({Data.ChangedAtk})");
+                WriteLine($"(+{Data.ChangedAtk})");
                 ResetColor();
             }
             if (Data.ChangedDef == 0)
@@ -106,9 +108,9 @@ namespace TextGame.Scene
             }
             else if (Data.ChangedDef != 0)
             {
-                Write($"방어력 : {Data.TotalDef} + ");
-                ForegroundColor = ConsoleColor.Red;
-                WriteLine($"({Data.ChangedDef})");
+                Write($"방어력 : {Data.TotalDef} ");
+                ForegroundColor = ConsoleColor.Blue;
+                WriteLine($"(+{Data.ChangedDef})");
                 ResetColor();
             }
             WriteLine($"체력 : {Data.player.Hp}");
@@ -116,7 +118,7 @@ namespace TextGame.Scene
 
             // 선택지 부분  -> 선택지 부분의 맨 앞은 \n, 맨 뒤에 \n로 통일
             WriteLine("\n1. 인벤토리");
-            WriteLine("2. 초기 화면으로\n");
+            WriteLine("0. 초기 화면으로\n");
             WriteLine("원하시는 행동을 입력해주세요\n>>");
 
             Select.StatusS();
@@ -126,7 +128,9 @@ namespace TextGame.Scene
         {
             Clear();
             // 세번째 페이지 (인트로에서 2. 인벤토리를 선택한 경우)
+            ForegroundColor = ConsoleColor.Yellow;
             WriteLine("인벤토리");  // 글씨 색상 변경 + 크기 크게
+            ResetColor();
             WriteLine("보유 중인 아이템을 관리할 수 있습니다\n");
 
             // 아이템 목록들이 나오는 화면 - 인벤토리 크기 맞추고 정렬해야되는 부분
@@ -135,8 +139,9 @@ namespace TextGame.Scene
 
             // 선택지 부분
             WriteLine("\n1. 장착 관리");
-            WriteLine("2. 상태 보기");
-            WriteLine("3. 초기 화면으로\n");
+            WriteLine("2. 정렬 관리");
+            WriteLine("3. 캐릭터 상태 보기");
+            WriteLine("0. 초기 화면으로\n");
             WriteLine("원하시는 행동을 입력해주세요\n>>");
 
             Select.InventoryS();
@@ -145,8 +150,10 @@ namespace TextGame.Scene
         public static void Equipment()
         {
             // 네번째 페이지 (위에서 1. 장착 관리를 선택한 경우)
-            Clear();
+            Clear(); 
+            ForegroundColor = ConsoleColor.Green;
             WriteLine("인벤토리 - 장착 관리");
+            ResetColor();
             WriteLine("아이템을 장착할 수 있습니다\n");
             WriteLine("[아이템 목록]");  // 정렬 시에 큰 목차가 될 부분
             Data.ItemTable();
@@ -159,6 +166,27 @@ namespace TextGame.Scene
             WriteLine("원하시는 행동을 입력해주세요\n>>");
 
             Select.EquipmentS();
+        }
+
+        public static void Sort()
+        {
+            Clear();
+            ForegroundColor = ConsoleColor.DarkMagenta;
+            WriteLine("인벤토리 - 정렬 관리");
+            ResetColor();
+            WriteLine("아이템을 정렬할 수 있습니다\n");
+            WriteLine("[아이템 목록]");
+            Data.ItemTable();
+
+            // 선택지 부분
+            WriteLine("\n1. 이름순 정렬");
+            WriteLine("2. 공격력 순 정렬");
+            WriteLine("3. 방어력 순 정렬");
+            WriteLine("9. 인벤토리");
+            WriteLine("0. 초기 화면으로\n");
+            WriteLine("원하시는 행동을 입력해주세요\n>>");
+
+            Select.SortS();
         }
 
         public static void Shop()

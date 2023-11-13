@@ -88,3 +88,80 @@
 
 수정된 흐름도 개략본과 이동에 필요한 상호작용 정리
 </details>
+
+
+### 구현한 기능 소개
+
+#### 1. 콘솔 꾸미기
+
+<details>
+
+ 
+<summary>접기/펼치기</summary>
+
+
+ 텍스트의 색상 변경 
+```
+Console.ForegroundColor = ConsoleColor.Red;  // 글씨 색상을 빨간색으로 변경
+Console.ResetColor();			     // 글씨 색상을 원래대로 변경
+```
+
+특정 글자의 색상을 변경하는 것도 가능
+공격력의 추가분은 빨간색으로, 방어력의 추가분은 파란색으로 표시
+```
+Write($"공격력 : {Data.TotalAtk} + ");
+ForegroundColor = ConsoleColor.Red;
+WriteLine($"({Data.ChangedAtk})");
+ResetColor();
+Write($"방어력 : {Data.TotalDef} + ");
+ForegroundColor = ConsoleColor.Blue;
+WriteLine($"({Data.ChangedDef})");
+ResetColor();
+```
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/446b08d5-e685-4792-a87b-27af5635fbd2)
+
+</details>
+
+#### 2. 인벤토리 크기 맞춤
+
+
+<details>
+
+	
+<summary>접기/펼치기</summary>
+
+
+ConsoleTables 사용
+아래와 같이 정렬되게 구현
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/bae0cbfc-3f95-400a-95b0-84da64bd6403)
+
+
+
+
+ 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

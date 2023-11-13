@@ -88,3 +88,256 @@
 
 수정된 흐름도 개략본과 이동에 필요한 상호작용 정리
 </details>
+
+
+### 구현한 기능 소개
+
+#### 1. 아이템 정보를 클래스로 구현해서 배열로 관리하기
+
+<details>
+
+<summary>접기/펼치기</summary>
+
+```
+public class Item
+{
+    public string Name { get; set; }
+    public int Atk { get; }
+    public int Def { get; }
+    public int Pri { get; }
+    public bool IsEquip { get; set; }
+
+    public Item(string name, int atk, int def, int pri, bool isEquip = false)
+    {
+        Name = name;
+        Atk = atk;
+        Def = def;
+        Pri = pri;
+        IsEquip = isEquip;
+    }
+}
+```
+위와 같이 아이템을 클래스화했다. 아이템이 갖고 있는 정보는 (아이템명, 공격력, 방어력, 가격, 장착여부)이다.
+item의 Name은 장착 시에 [E]를 앞에 추가하기 위해 set을 추가했으며,
+장착여부도 플레이어가 장착할 수 있게 하기 위해 set을 추가했다.
+이후에 아래와 같이 아이템을 배열로 만들어서 관리했다.
+
+```
+items = new Item[]
+{
+    new Item("무쇠 갑옷", 0, 5, 0),		// new Item("무쇠 갑옷", 0, 5, 0, true)
+    new Item("낡은 검", 2, 0, 0),		// new Item("낡은 검", 2, 0, 0, true)
+    new Item("단검", 1, 0, 0),
+    new Item("숏소드", 5, 0, 100)
+};
+```
+
+장착여부(bool isEquip은 초기에 false로 정의했기에 따로 값을 주지 않는 한 false이다)
+만약 초기에 장착하게 하고 싶으면 주석과 같이 초기 값에 true를 넣으면된다.
+이후에 items에 관한 상호작용을 하는 경우에 이 배열을 사용했다
+예를 들어 장비 관리에서 장비를 장착하는 선택지를
+```
+public static void ItemSelection()
+{
+    for (int i = 0; i < items.Length;i++)
+    {
+        WriteLine($"{i + 1}. {items[i].Name}");
+    }
+}
+```
+의 방식으로 코딩했다. 아래의 선택지 부분이 위의 배열을 이용한 것이다.
+
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/f3ca45e0-561d-4d6a-b4f5-53e6d0e45a48)
+
+
+</details>
+
+#### 2. 콘솔 꾸미기
+
+<details>
+
+ 
+<summary>접기/펼치기</summary>
+
+
+ 텍스트의 색상 변경 
+```
+Console.ForegroundColor = ConsoleColor.Red;  // 글씨 색상을 빨간색으로 변경
+Console.ResetColor();			     // 글씨 색상을 원래대로 변경
+```
+
+특정 글자의 색상을 변경하는 것도 가능
+공격력의 추가분은 빨간색으로, 방어력의 추가분은 파란색으로 표시
+```
+Write($"공격력 : {Data.TotalAtk} + ");
+ForegroundColor = ConsoleColor.Red;
+WriteLine($"({Data.ChangedAtk})");
+ResetColor();
+Write($"방어력 : {Data.TotalDef} + ");
+ForegroundColor = ConsoleColor.Blue;
+WriteLine($"({Data.ChangedDef})");
+ResetColor();
+```
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/d4ad170f-4477-49ca-b4bc-4ffe2ee40e7b)
+
+장착중인 아이템을 초록색으로 표시
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5f5f746b-9166-4375-b4eb-eccacf817326)
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/945bcb3d-2c01-4ab8-bd66-2dea3102f9e7)
+
+
+
+
+
+
+
+</details>
+
+#### 3. 인벤토리 크기 맞춤
+
+
+<details>
+
+수작업으로 table의 길이를 정하고, 그 길이에 맞게 할당해서 테두리를 그린 뒤에
+items[i]의 정보들을 입력하는 방식으로 직접 그림.
+PadRight()를 사용하는 과정에서
+한글은 넓은 문자로 길이가 2로 취급해야되는 주의점이 있음.
+직접 그림으로써 장착 아이템의 색상을 변경할 수 있고,
+공격력과 방어력에 색상을 주어 구분하기 쉽게 할 수 있음.
+
+<details>
+<summary>접기/펼치기</summary>
+
+```
+	
+public static void ItemTable()
+{
+    int tableWidth = 47;
+    WriteLine(new string('-', tableWidth));
+    Write("| 번호 | ");
+    Write("     아이템명      | ");
+    ForegroundColor = ConsoleColor.Red;
+    Write("공격력");
+    ResetColor();
+    Write(" | ");
+    ForegroundColor = ConsoleColor.Blue;
+    Write("방어력");
+    ResetColor();
+    WriteLine(" |");
+
+    WriteLine(new string('-', tableWidth));
+
+    for (int i = 0; i < items.Length; i++)
+    {
+        Write($"|  {i + 1}   | ");
+        if (items[i].IsEquip)
+        {
+            ForegroundColor = ConsoleColor.Green;
+            Write(" ");
+            Write(PadRightForMixedText(items[i].Name, 18));
+            ResetColor();
+        }
+        else
+        {
+            Write(" ");
+            Write(PadRightForMixedText(items[i].Name, 18));
+        }
+        Write("|");
+        ForegroundColor = ConsoleColor.Red;
+        if (items[i].Atk == 0)
+        {
+            Write(" ".PadRight(8));
+        }
+        else
+        {
+            Write("  + ");
+            Write(items[i].Atk.ToString().PadRight(4));
+        }
+        ResetColor();
+        Write("|");
+        ForegroundColor = ConsoleColor.Blue;
+        if (items[i].Def == 0)
+        {
+            Write(" ".PadRight(8));
+        }
+        else
+        {
+            Write("  + ");
+            Write(items[i].Def.ToString().PadRight(4));
+        }
+        ResetColor();
+        Write("|");
+        WriteLine("");
+    }
+    WriteLine(new string('-', tableWidth));
+}
+
+// 글자가 넓은 문자인 경우에 길이를 조정해주는 조작이 필요함
+public static int GetPrintableLength(string str)
+{
+    int length = 0;
+    foreach (char c in str)
+    {
+        if (char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter)
+        {
+            length += 2;  // 한글과 같은 넓은 문자에 대해 길이를 2로 취급
+        }
+        else
+        {
+            length += 1;  // 나머지 문자에 대해 길이를 1로 취급
+        }
+    }
+
+    return length;
+}
+
+public static string PadRightForMixedText(string str, int totalLength)
+{
+    int currentLength = GetPrintableLength(str);
+    int padding = totalLength - currentLength;
+    return str.PadRight(str.Length + padding);
+}
+```
+
+</details>
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5753cb58-850c-412c-a127-54340b67d812)
+
+
+
+
+
+ 
+</details>
+
+
+
+#### 3. 인벤토리 정렬
+
+<details>
+	
+<summary>접기/펼치기</summary>
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

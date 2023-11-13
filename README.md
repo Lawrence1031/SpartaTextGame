@@ -1,4 +1,13 @@
-![01 전체적인흐름도](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/57d85d45-3ee5-4f62-8c98-690e5c6a010f)# SpartaTextGame
 
-![Uploading 01.전체적인흐름![02 화면구성관리](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/7974f4fd-cf5b-4889-b5d9-82f3aaa483be)
-도.png…]()
+
+
+
+
+
+
+
+
+![01 전체적인흐름도](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/5c70b0be-b455-4b31-81b6-7491d3bdec03)
+
+
+![02 화면구성관리](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/4689d58e-14f9-4055-8041-ff9f6c850950)

@@ -144,7 +144,9 @@ public static void ItemSelection()
     }
 }
 ```
-의 방식으로 코딩했다.
+의 방식으로 코딩했다. 아래의 선택지 부분이 위의 배열을 이용한 것이다.
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/f3ca45e0-561d-4d6a-b4f5-53e6d0e45a48)
+
 
 </details>
 

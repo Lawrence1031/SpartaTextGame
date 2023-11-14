@@ -95,8 +95,6 @@
 
 <details>
 
-<summary>접기/펼치기</summary>
-
 ```
 public class Item
 {
@@ -156,9 +154,6 @@ public static void ItemSelection()
 
 <details>
 
- 
-<summary>접기/펼치기</summary>
-
 
  텍스트의 색상 변경 
 ```
@@ -206,7 +201,6 @@ PadRight()를 사용하는 과정에서
 공격력과 방어력에 색상을 주어 구분하기 쉽게 할 수 있음.
 
 <details>
-<summary>접기/펼치기</summary>
 
 ```
 	
@@ -315,8 +309,8 @@ public static string PadRightForMixedText(string str, int totalLength)
 #### 4. 인벤토리 정렬
 
 <details>
-	
-<summary>접기/펼치기</summary>
+
+인벤토리를 정렬하는 기능도 구현했는데
 
 
 </details>

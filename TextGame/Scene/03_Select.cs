@@ -184,7 +184,19 @@ namespace TextGame.Scene
                 {
                     if (Data.items[number - 1].IsEquip == false)
                     {
-                        Data.items[number - 1].IsEquip = true;
+                        if (Data.items[number - 1].Type == "Weapon")
+                        {
+                            Data.UnEquipWeapon();
+                            Data.items[number - 1].IsEquip = true;
+                            Data.IsWeaponEquip = true;
+                        }
+                        else if (Data.items[number - 1].Type == "Armor")
+                        {
+                            Data.UnEquipArmor();
+                            Data.items[number - 1].IsEquip = true;
+                            Data.IsArmorEquip = true;
+                        }
+                        // 아이템 착용 전에 중복인지 확인하는 과정
                         WriteLine($"{Data.items[number - 1].Name}을/를 장착합니다.");
                         Data.items[number - 1].Name = "[E]" + Data.items[number - 1].Name;
                         ReadLine();
@@ -193,9 +205,17 @@ namespace TextGame.Scene
                     }
                     else if (Data.items[number - 1].IsEquip == true)
                     {
-                        Data.items[number - 1].IsEquip = false;
                         WriteLine($"{Data.items[number - 1].Name}을/를 해제합니다.");
-                        Data.items[number - 1].Name = Data.items[number - 1].Name.Substring(3);
+
+                        if (Data.items[number - 1].Type == "Weapon")
+                        {
+                            Data.UnEquipWeapon();
+                        }
+                        else if (Data.items[number - 1].Type == "Armor")
+                        {
+                            Data.UnEquipArmor();
+                        }
+
                         ReadLine();
                         Data.ChangeStat();
                         TextScene.Equipment();

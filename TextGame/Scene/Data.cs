@@ -20,6 +20,8 @@ namespace TextGame.Scene
         public static bool SortedName = true;
         public static bool SortedAtk = true;
         public static bool SortedDef = true;
+        public static bool IsWeaponEquip = true;
+        public static bool IsArmorEquip = true;
         public static int ChangedAtk { get; private set; }
         public static int ChangedDef { get; private set; }
         public static int TotalAtk { get; private set; }
@@ -35,15 +37,19 @@ namespace TextGame.Scene
             
             items = new Item[]
             {
-                new Item("무쇠 갑옷", 0, 5, 0, true),
-                new Item("낡은 검", 2, 0, 0, true),
-                new Item("단검", 1, 0, 0),
-                new Item("숏소드", 5, 0, 100),
-                new Item("나무 방패", 0, 2, 100)
+                new Item("무쇠 갑옷", 0, 5, 0, "Armor", true),
+                new Item("낡은 검", 2, 0, 0, "Weapon", true),
+                new Item("단검", 1, 0, 0, "Weapon"),
+                new Item("숏소드", 5, 0, 100, "Weapon"),
+                new Item("나무 방패", 0, 2, 100, "Armor")
             };
             EquipCheck();
         }
 
+        /// <summary>
+        /// 장비를 착용하고 있는지 확인하는 함수
+        /// 초기 장착하는 장비가 있는 경우용
+        /// </summary>
         public static void EquipCheck()
         {
             for (int i = 0; i < items.Length; i++)
@@ -55,6 +61,9 @@ namespace TextGame.Scene
             }
         }
 
+        /// <summary>
+        /// 아이템을 Table로 표시하는 함수
+        /// </summary>
         public static void ItemTable()
         {
             int tableWidth = 47;
@@ -142,6 +151,9 @@ namespace TextGame.Scene
             return str.PadRight(str.Length + padding);
         }
 
+        /// <summary>
+        /// 장비 관리에서 아이템 선택지를 만들어주는 함수
+        /// </summary>
         public static void ItemSelection()
         {
             for (int i = 0; i < items.Length;i++)
@@ -155,11 +167,62 @@ namespace TextGame.Scene
                 }
                 else
                 {
+                    ResetColor();
                     WriteLine($"{i + 1}. {items[i].Name}");
                 }
             }
         }
 
+        
+
+
+        /// <summary>
+        /// 무기를 해제 시키는 함수
+        /// </summary>
+        public static void UnEquipWeapon()
+        {
+            if (IsWeaponEquip)
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (items[i].Type == "Weapon")
+                    {
+                        if (items[i].IsEquip)
+                        {
+                            items[i].IsEquip = false;
+                            items[i].Name = items[i].Name.Substring(3);
+                        }
+                        IsWeaponEquip = false;
+                    }                 
+                }
+            }
+        }
+
+        /// <summary>
+        /// 방어구를 해제 시키는 함수
+        /// </summary>
+        public static void UnEquipArmor()
+        {
+            if (IsArmorEquip)
+            {
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (items[i].Type == "Armor")
+                    {
+                        if (items[i].IsEquip)
+                        {
+                            items[i].IsEquip = false;
+                            items[i].Name = items[i].Name.Substring(3);
+                        }
+                        IsArmorEquip = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 아이템을 이름 순으로 정렬시키는 함수
+        /// </summary>
         public static void SortName()
         {
             if (SortedName)
@@ -175,6 +238,9 @@ namespace TextGame.Scene
 
         }
 
+        /// <summary>
+        /// 아이템을 공격력 순으로 정렬시키는 함수
+        /// </summary>
         public static void SortAtk()
         {
             if (SortedAtk)
@@ -189,6 +255,10 @@ namespace TextGame.Scene
             }
         }
 
+
+        /// <summary>
+        /// 아이템을 방어력 순으로 정렬시키는 함수
+        /// </summary>
         public static void SortDef()
         {
             if (SortedDef)
@@ -204,6 +274,9 @@ namespace TextGame.Scene
         }
 
 
+        /// <summary>
+        /// 아이템 착용에 따른 능력치 변화 반영
+        /// </summary>
         public static void ChangeStat()
         {
             int ChaAtk = 0;
@@ -270,16 +343,18 @@ namespace TextGame.Scene
             public int Def { get; }
             public int Pri { get; }
             public bool IsEquip { get; set; }
+            public string Type { get; }
 
             public static int ItemCnt = 0;
 
-            public Item(string name, int atk, int def, int pri, bool isEquip = false)
+            public Item(string name, int atk, int def, int pri, string type = null, bool isEquip = false)
             {
                 Name = name;
                 Atk = atk;
                 Def = def;
                 Pri = pri;
                 IsEquip = isEquip;
+                Type = type;
             }
         }
 
@@ -291,7 +366,7 @@ namespace TextGame.Scene
         }
 
 
-        // 아래는 안쓰는 (이해 못한) 데이터들
+        // 아래는 안쓰는 이전에 작업했던 Table 데이터
         //public static void ItemTableOld()
         //{
         //    var data = ItemData();

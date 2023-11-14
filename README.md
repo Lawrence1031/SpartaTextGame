@@ -4,7 +4,6 @@
 
 ### 과제 세부 사항
 <details>
-<summary>접기/펼치기</summary>
 
 #### 과제 개요
 1. 던전을 떠나기 전 마을에서 장비를 구하는 게임을 텍스트로 구현합니다.
@@ -96,8 +95,6 @@
 
 <details>
 
-<summary>접기/펼치기</summary>
-
 ```
 public class Item
 {
@@ -157,9 +154,6 @@ public static void ItemSelection()
 
 <details>
 
- 
-<summary>접기/펼치기</summary>
-
 
  텍스트의 색상 변경 
 ```
@@ -207,7 +201,6 @@ PadRight()를 사용하는 과정에서
 공격력과 방어력에 색상을 주어 구분하기 쉽게 할 수 있음.
 
 <details>
-<summary>접기/펼치기</summary>
 
 ```
 	
@@ -313,13 +306,47 @@ public static string PadRightForMixedText(string str, int totalLength)
 
 
 
-#### 3. 인벤토리 정렬
+#### 4. 인벤토리 정렬 (20231114_updated)
 
 <details>
-	
-<summary>접기/펼치기</summary>
+
+인벤토리를 정렬하는 기능은 OrderBy와 OrderByDescending을 이용하여 구현하였는데
+예를 들어 Name을 기준으로 정렬하는 기능은 아래와 같이 코딩했다.
+```
+public static void SortName()
+{
+    if (SortedName)
+    {
+        SortedName = false;
+        items = items.OrderBy(item => item.Name).ToArray();
+    }
+    else
+    {
+        SortedName = true;
+        items = items.OrderByDescending(item => item.Name).ToArray();
+    }
+}
+```
+나만의 특징이라면 SortedName 이라는 bool 값을 이용하여 정렬을 실행했는지 안했는지를 판단하게 한 뒤에
+정렬 버튼을 누를 때 마다 오름차순 정렬 <-> 내림차순 정렬을 할 수 있게 만들었다.
 
 
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/b07c7c8c-555f-408d-9993-dfa0ab4b45f3)
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/79c67b3b-100c-4b6f-8d1d-f89d491f5019)
+
+위의 사진처럼 정렬을 누를 때 마다 정렬이 뒤집어지게 구현했다.
+뿐만 아니라 Atk과 Def의 숫자 순으로도 정렬이 되게 구현했다.
+
+</details>
+
+#### 5. 장착 개선 (20231114_updated)
+
+<details>
+
+아이템 장착 개선
+
+ 
 </details>
 
 
@@ -330,7 +357,35 @@ public static string PadRightForMixedText(string str, int totalLength)
 
 
 
+### 미구현이지만 구현하고 싶은 것들 (20231114_updated)
 
+#### 1. 상점에서 아이템 구매
+고전 게임의 감성을 살려서 아이템을 구매할 수만 있게
+#### 2. 던전 입장 구현
+간단히 던전에 입장해서 일정 조건을 만족하면 클리어 하고 보상을 얻는 구조
+#### 3. 던전 내부 구현
+<details>
+던전에 입장한 후에 진행을 고를 수 있게 설정
+예를 들면 던전 입장한 후에
+1. 진행한다
+2. 휴식한다
+3. 마을로 돌아간다
+등의 선택지로 던전을 탐험할 수 있게 구현
+
+1. 진행한다 를 선택하면
+일정 확률로 몬스터와 조우 -> 전투
+(간단한 로직으로 몬스터 체력 / 플레이어의 공격력 의 값을 이용하여 턴을 계산하고 몬스터의 공격력과 플레이어의 방어력을 기반으로 체력 소모, 전투 후의 체력이 0보다 크면 승리, 일정 보상 획득
+-> 예를 들어 플레이어 체력 100, 공격력 15, 방어력 5 / 몬스터 체력 45, 공격력 10
+-> 몬스터 체력 / 플레이어의 공격력 = 3 -> 3턴간 진행 -> 플레이어가 받는 대미지 = (몬스터의 공격력 10 - 플레이어의 방어력 5) * 3(턴 수)
+-> 전투 승리, 이후 남은 체력 85, 보상 획득
+의 간단한 로직으로 전투 실행.
+몬스터와 조우하지 않는 경우의 선택지 (아이템 획득, 아무일도 없음 등) 도 추가
+2. 휴식한다 를 선택하면
+일정 로직으로 체력 회복 - 예를 들면 플레이어의 체력과 레벨에 비례해서 (플레이어의 체력의 10%) * (플레이어의 레벨의 보정값 ex) 레벨이 01 ~ 10인 경우 1.1배, 11 ~ 20인 경우 1.2배 등) 으로 체력 회복
+
+의 정도로 좀 더 던전을 탐험할 수 있게 구현
+
+</details>
 
 
 

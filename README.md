@@ -306,7 +306,7 @@ public static string PadRightForMixedText(string str, int totalLength)
 
 
 
-#### 4. 인벤토리 정렬
+#### 4. 인벤토리 정렬 (20231114_updated)
 
 <details>
 
@@ -340,6 +340,14 @@ public static void SortName()
 
 </details>
 
+#### 5. 장착 개선 (20231114_updated)
+
+<details>
+
+아이템 장착 개선
+
+ 
+</details>
 
 
 
@@ -348,7 +356,8 @@ public static void SortName()
 
 
 
-### 미구현이지만 구현하고 싶은 것들
+
+### 미구현이지만 구현하고 싶은 것들 (20231114_updated)
 
 #### 1. 상점에서 아이템 구매
 고전 게임의 감성을 살려서 아이템을 구매할 수만 있게

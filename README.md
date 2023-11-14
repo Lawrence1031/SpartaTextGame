@@ -344,8 +344,90 @@ public static void SortName()
 
 <details>
 
-아이템 장착 개선
+아이템 장착 개선은 아이템 별로 Type을 도입하여
+중복된 Type의 아이템을 장착하고 있는지 파악할 수 있게 구현했다.
+무기를 예로 들면 UnEquipWeapon(); 함수를 아래와 같이 작성했는데,
 
+```
+public static void UnEquipWeapon()
+{
+    if (IsWeaponEquip)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].Type == "Weapon")
+            {
+                if (items[i].IsEquip)
+                {
+                    items[i].IsEquip = false;
+                    items[i].Name = items[i].Name.Substring(3);
+                }
+                IsWeaponEquip = false;
+            }                 
+        }
+    }
+}
+```
+
+만약 IsWeaponEquip 상태라면 (무기를 장착하고 있다면)
+전체 아이템 중에서 Weapon Type의 아이템들을 찾은 후에 그 무기가 IsEquip 라면 (장착하고 있는 상태라면)
+IsEquip을 false로 바꾸고 (장착을 해제하고) 이름에 추가했던 [E]를 없애준 후에
+IsWeaponEquip을 false로 변경하는 방식으로 구현했다.
+
+이 함수를 통해서 무기를 장착하고 있는 경우에는 그 무기를 찾아서 해제할 수 있게 되었으며,
+이는 IsWeaponEquip 이라는 bool 값을 통해서 조절할 수 있다.
+아래는 위의 기능을 구현하는 순서를 정리한 것이다.
+<details>
+	
+	장착 개선 - 추가할 로직
+무기를 기준으로 작성
+
+bool 값으로 무기를 장착하고 있는지 확인
+
+public static bool IsWeaponEquip = true;
+
+(초기에 "무쇠 갑옷"과 "낡은 검"을 장착하고 있으므로,
+ 초기 값을 true로 시작)
+
+아이템을 장착하려고 하는 순간
+1. 그 아이템이 무기인지 방어구인지 확인
+2. 무기인 경우에 무기를 장착하고 있는지 확인
+3. 무기를 장착하고 있다면, 그 무기를 해제하고
+4. 장착하려는 무기를 장착
+
+
+무기를 장착하고 있으면 IsWeaponEquip = true
+만약 무기를 해제하면 IsWeaponEquip = false로
+
+
+-------------------------------------------------------
+
+진행 상황
+1. 아이템을 어떻게 무기인지 방어구인지 확인할 것인가
+해결 방안
+1. 공격력을 올리면 무기, 방어력을 올리면 방어구
+-> 예상되는 문제는 방어력을 올리는 무기, 공격력을 올리는 방어구는 어떻게 할 것인가
+-> 기각
+2. 아이템에 새로운 특성을 추가하여 무기와 방어구 등 구분
+-> public string Type -> Type에 무기, 방어구
+items[i].Type == weapon -> 이런 식으로 사용할 수 있을 것.
+
+</details>
+
+위의 함수를 통해서 아래의 사진처럼 아이템의 장착을 개선했다.
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/ccb4904b-d964-40fc-b709-39d580887e85)
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/f680dcc3-a16a-4da5-9a3a-10595574a1ec)
+
+
+초기 상태에서 4번 숏소드를 장착한 것으로,
+2번 낡은 검이 해제되면서 동시에 4번 숏소드가 장착되었다.
+
+추가로 장착된 아이템 이름에 [E]를 추가함으로써
+이름순으로 정렬 시에 장착 중인 아이템이 최상단에 오게 할 수 있다.
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/c1ba36db-09bb-4784-b30a-aea6fbe6f0ce)
  
 </details>
 

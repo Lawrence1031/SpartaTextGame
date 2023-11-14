@@ -310,8 +310,33 @@ public static string PadRightForMixedText(string str, int totalLength)
 
 <details>
 
-인벤토리를 정렬하는 기능도 구현했는데
+인벤토리를 정렬하는 기능은 OrderBy와 OrderByDescending을 이용하여 구현하였는데
+예를 들어 Name을 기준으로 정렬하는 기능은 아래와 같이 코딩했다.
+```
+public static void SortName()
+{
+    if (SortedName)
+    {
+        SortedName = false;
+        items = items.OrderBy(item => item.Name).ToArray();
+    }
+    else
+    {
+        SortedName = true;
+        items = items.OrderByDescending(item => item.Name).ToArray();
+    }
+}
+```
+나만의 특징이라면 SortedName 이라는 bool 값을 이용하여 정렬을 실행했는지 안했는지를 판단하게 한 뒤에
+정렬 버튼을 누를 때 마다 오름차순 정렬 <-> 내림차순 정렬을 할 수 있게 만들었다.
 
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/b07c7c8c-555f-408d-9993-dfa0ab4b45f3)
+
+![image](https://github.com/Lawrence1031/SpartaTextGame/assets/144416099/79c67b3b-100c-4b6f-8d1d-f89d491f5019)
+
+위의 사진처럼 정렬을 누를 때 마다 정렬이 뒤집어지게 구현했다.
+뿐만 아니라 Atk과 Def의 숫자 순으로도 정렬이 되게 구현했다.
 
 </details>
 
